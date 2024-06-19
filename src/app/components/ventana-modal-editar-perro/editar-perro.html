@@ -1,0 +1,88 @@
+<h2 mat-dialog-title>{{data.animalID}}</h2>
+
+<mat-dialog-content class="mat-typography">
+
+  <div>
+    <label for="animalID">AnimalId:</label> <br>
+    <input class="form-control" id="animalID" type="text" placeholder="{{data.animalID}}" [(ngModel)]="data.animalID" name="animalID"/> <br>
+  </div>
+
+  <div>
+    <label for="edad">Edad:</label> <br>
+    <input class="form-control" id="edad" type="number" placeholder="{{data.edad}}" [(ngModel)]="data.edad" name="edad"/> <br>
+  </div>
+
+  <div>
+    <label for="fechaprimeravacuna">Fecha de vacunación:</label> <br>
+    <input class="form-control" id="fechaprimeravacuna" type="date" placeholder="{{data.fechaprimeravacuna}}" [(ngModel)]="data.fechaprimeravacuna" name="fechaprimeravacuna"/> <br>
+  </div>
+
+  <div>
+    <label for="lugarDeVacunacion">Lugar de vacunación:</label> <br>
+    <textarea class="form-control" id="lugarDeVacunacion" type="text" placeholder="{{data.lugarDeVacunacion}}" [(ngModel)]="data.lugarDeVacunacion" name="lugarDeVacunacion"></textarea> <br>
+  </div>
+
+  <div>
+    <label for="peso">Peso:</label> <br>
+    <input class="form-control" id="peso" type="number" placeholder="{{data.peso}}" [(ngModel)]="data.peso" name="peso"/> <br>
+  </div>
+
+  <!-- <div>
+    <label for="edificio">Edificio:</label> <br>
+    <input class="form-control" id="edificio" type="text" placeholder="{{data.edificio}}" [(ngModel)]="data.edificio" name="edificio"/> <br>
+  </div> -->
+
+  <div>
+    <label for="edificio">Edificio:</label>
+    <select class="form-control" id="edificio" name="edificio" [(ngModel)]="data.edificio" #edificio="ngModel" ><br>
+      <option value="" disabled selected>Seleccione el edificio</option>
+      <option value="1">Edificio 1</option>
+      <option value="2">Edificio 2</option>
+      <option value="3">Edificio 3</option>
+      <option value="4">Edificio 4</option>
+    </select>
+  </div><br>
+
+  <div>
+    <label for="box">Box:</label> <br>
+    <input class="form-control" id="box" type="text" placeholder="{{data.box}}" [(ngModel)]="data.box" name="box"/> <br>
+  </div>
+
+  <div>
+    <label for="origen">Origen:</label> <br>
+    <input class="form-control" id="origen" type="number" placeholder="{{data.origen}}" [(ngModel)]="data.origen" name="origen"/> <br>
+  </div>
+
+  <div>
+    <label for="estadoAdopcion">Estado de adopción:</label>
+    <select class="form-control" id="estadoAdopcion" name="estadoAdopcion" [(ngModel)]="data.estadoAdopcion" #estadoAdopcion="ngModel" ><br>
+      <option value="" disabled selected>¿Está adoptado?</option>
+      <option value="Si">Si</option>
+      <option value="No">No</option>
+    </select>
+  </div><br>
+
+
+  <div>
+    <label for="estadoMuerto">Estado de vida:</label>
+    <select class="form-control" id="estadoMuerto" name="estadoMuerto" [(ngModel)]="data.estadoMuerto" #estadoMuerto="ngModel" >
+      <option value="" disabled selected>¿Está muerto?</option>
+      <option value="Si">Si</option>
+      <option value="No">No</option>
+    </select>
+  </div>
+  <br>
+
+  <div>
+    <label for="observaciones">Observaciones:</label> <br>
+    <textarea class="form-control" id="observaciones" type="text" placeholder="{{data.observaciones}}" [(ngModel)]="data.observaciones" name="observaciones"></textarea> <br>
+  </div>
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+      <button mat-button (click)="onYesClick()" cdkFocusInitial>Editar</button>
+</mat-dialog-actions>
+
+

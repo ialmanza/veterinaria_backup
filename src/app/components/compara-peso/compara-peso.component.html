@@ -1,0 +1,43 @@
+<div>
+  <div class="container p-4">
+    <div class="row">
+      <div class="col-md-6 justify-content-center mx-auto">
+        <div class="card-header" >
+            <form>
+                  <div class="card mb-6">
+
+                    <flowbite-form-field>
+                      <input class="form-control" flowbiteInput placeholder="Ingresar ID" [(ngModel)]="id_perro"
+                      name="id_perro"
+                      required /> <br>
+                    </flowbite-form-field>
+
+                    <flowbite-form-field>
+                      <input class="form-control" type="text" flowbiteInput placeholder="Ingresar el peso" name="pesos" [(ngModel)]="datagrafico.peso" #peso="ngModel" required /> <br>
+                    </flowbite-form-field>
+
+
+                    <flowbite-form-field>
+                      <input class="form-control" type="date" flowbiteInput placeholder="Ingresar Fecha" name="fechaDePesos" [(ngModel)]="datagrafico.fecha" #fecha="ngModel" required /> <br>
+                    </flowbite-form-field>
+
+                    <button type="submit" class="btn btn-primary" (click)="onSubmit()">Enviar</button> <br>
+                  </div>
+
+            </form>
+        </div> <br><br>
+
+        <div class="card-body">
+          <div class="card mb-6 d-flex justify-content-center">
+            <canvas #myChart></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ <!-- <button class="btn btn-primary" (click)="mostrar()">
+  Mostrar Datos
+ </button> -->
+
+

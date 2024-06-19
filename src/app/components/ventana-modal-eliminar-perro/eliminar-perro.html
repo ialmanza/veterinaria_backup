@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Confirmar</h1>
+    <div mat-dialog-content>
+      <p>Está seguro que desea eliminar {{data.animalID}}?</p>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">No</button>
+      <button mat-button (click)="onYesClick()" cdkFocusInitial>Si</button>
+    </div>

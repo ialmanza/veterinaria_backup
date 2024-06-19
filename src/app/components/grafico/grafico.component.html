@@ -1,0 +1,56 @@
+<!-- <br>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+  <div class="card" style="max-width: 500px; width: 100%;">
+    <div class="card-body">
+      <div>
+        <input type="text" class="form-control" [(ngModel)]="id_perro" placeholder="Ingrese el animalID"><br><br>
+      </div>
+      <canvas #myChart></canvas><br><br>
+      <div class="d-flex justify-content-center">
+        <button class="btn btn-primary" (click)="mostrarDataGrafico()">Mostrar Gráfico</button>
+      </div>
+
+    </div>
+
+  </div>
+</div> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Example</title>
+  <!-- Agrega el enlace a Bootstrap -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .card-custom {
+      max-width: 600px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card card-custom">
+      <div class="card-body">
+        <div>
+          <input type="text" class="form-control" [(ngModel)]="id_perro" placeholder="Ingrese el animalID"><br><br>
+        </div>
+        <canvas #myChart></canvas><br><br>
+        <div class="d-flex justify-content-center">
+          <button class="btn btn-primary" (click)="mostrarDataGrafico()">Mostrar Gráfico</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Agrega el script de Bootstrap y sus dependencias -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+

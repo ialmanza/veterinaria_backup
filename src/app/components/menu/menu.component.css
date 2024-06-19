@@ -1,0 +1,45 @@
+@import 'tailwindcss/tailwind.css';
+
+/* Overlay hidden by default */
+.hidden {
+  display: none;
+}
+
+/* Overlay when visible */
+#drawer-overlay {
+  transition: opacity 0.3s ease;
+}
+
+
+.custom-button {
+  background-color: transparent; /* Quita el fondo */
+  color: blue; /* Color del texto */
+  border: none; /* Quita el borde */
+  outline: none; /* Quita el contorno */
+  font-size: 18px;
+}
+
+.custom-button:hover {
+  color: black; /* Color del texto al pasar el mouse */
+}
+
+
+/* Drawer visible class */
+.translate-x-0 {
+  transform: translateX(0);
+}
+
+/* Hover area */
+#drawer-hover-area {
+  background: transparent;
+}
+
+/* Drawer hidden class (default) */
+.drawer-hidden {
+  transform: translateX(-100%);
+}
+
+/* Drawer visible class */
+.drawer-visible {
+  transform: translateX(0);
+}

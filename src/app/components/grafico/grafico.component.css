@@ -1,0 +1,26 @@
+.container {
+  min-height: 100vh;
+}
+.card {
+  max-width: 100px;
+  width: 200%;
+  margin: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+  border-radius: 10px; /* Bordes redondeados */
+}
+.card-body {
+  padding: 20px; /* Padding interno */
+}
+.form-control {
+  border-radius: 5px; /* Bordes redondeados para el input */
+}
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  border-radius: 5px; /* Bordes redondeados para el botón */
+  transition: background-color 0.3s ease;
+}
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}

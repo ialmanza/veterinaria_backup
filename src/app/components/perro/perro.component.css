@@ -1,0 +1,71 @@
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  background-color: #fff; /* Puedes ajustar el color de fondo según tu preferencia */
+  transition: 0.3s; /* Transición suave para las animaciones */
+  overflow: hidden; /* Asegura que los contenidos internos no se desborden */
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); /* Aumenta la sombra al pasar el mouse */
+ }
+
+
+.form-card {
+  position: sticky; /* Permite que la tarjeta se "pegue" al hacer scroll */
+  top: 20px; /* Ajusta la distancia desde la parte superior */
+}
+
+.form-control {
+  border-radius: 5px; /* Redondea las esquinas de los campos de entrada */
+  border: 1px solid #ced4da; /* Establece un borde para los campos de entrada */
+ }
+
+ .btn {
+  border-radius: 5px; /* Redondea las esquinas de los botones */
+
+ }
+
+ .form-group {
+  margin-bottom: 15px; /* Añade margen entre los grupos de formulario */
+ }
+
+ .header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.skills-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 10px; /* Espacio entre los íconos */
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  width: 24px; /* Ajusta el tamaño según sea necesario */
+  height: 24px;
+}
+
+.btn {
+  margin-left: 10px; /* Espacio entre los botones */
+}
+
+.icon-container button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.icon-container button:hover .icon {
+  fill: #007bff; /* Cambia el color al pasar el ratón si lo deseas */
+}
+

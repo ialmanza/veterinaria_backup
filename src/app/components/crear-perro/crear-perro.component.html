@@ -1,0 +1,68 @@
+<div>
+  <div class="container p-4">
+    <div class="row">
+      <div class="col-md-9 mx-auto">
+        <div class="card" >
+          <form (submit)="addPerro(edad,fechaPrimeraVacuna,lugarDeVacunacion,origen, box, observaciones)" #perroForm="ngForm">
+            <div class="form-group p-2 ">
+
+
+              <div class="form-group p-2">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="animalId" required [(ngModel)]="perro.animalId" name="animalId" #animalId="ngModel" placeholder="Ingrese el animal ID:">
+                  <div [hidden]="animalId.valid || animalId.pristine" class="custom-error">
+                    El ID es requerido.
+                  </div>
+                </div>
+              </div>
+
+              <input type="number" class="form-control" placeholder="Ingrese la edad en meses:" #edad> <br>
+              <label for="fechaprimeravacuna"> Fecha de vacunación:</label>
+              <input type="date" class="form-control"  #fechaPrimeraVacuna> <br>
+              <textarea name="lugarDeVacunacion"  class="form-control" placeholder="Lugar de vacunación" cols="30" rows="10" #lugarDeVacunacion></textarea> <br>
+
+
+              <div class="form-group">
+                <div class="form-group">
+                  <input type="float" class="form-control" id="peso" required [(ngModel)]="perro.peso" name="peso" #peso="ngModel" placeholder="Ingrese el peso:">
+                  <div [hidden]="peso.valid || peso.pristine" class="custom-error">
+                    El Peso es requerido.
+                  </div>
+                </div>
+              </div>
+
+
+              <input type="text" class="form-control" placeholder="Ingrese el origen:" #origen> <br>
+
+              <div>
+                <label for="edificio">Edificio:</label>
+                <select class="form-control" id="edificio" name="edificio" [(ngModel)]="perro.edificio" #edificio="ngModel" ><br>
+                  <option value="" disabled selected>Seleccione el edificio</option>
+                  <option value="1">Edificio 1</option>
+                  <option value="2">Edificio 2</option>
+                  <option value="3">Edificio 3</option>
+                  <option value="4">Edificio 4</option>
+                </select>
+              </div>
+
+              <input type="text" class="form-control" placeholder="Box:" #box> <br>
+
+
+
+
+
+              <textarea name="observaciones"  class="form-control" placeholder="Observaciones" cols="30" rows="10" #observaciones></textarea> <br><br>
+
+
+              <div class="d-flex flex-column">
+                <button type="submit" class="btn btn-primary btn-block mb-2" [disabled]="!perroForm.form.valid">Agregar</button>
+              <button type="button" class="btn btn-danger btn-block mt-2" (click)="onClick()">Cancelar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
