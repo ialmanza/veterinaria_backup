@@ -8,6 +8,7 @@ import { FilterPipe } from '../../pipes/filter.pipe';
 import { DialogContentEditExampleDialog } from '../ventana-modal-editar-perro/ventana-modal-editar-perro.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAnimationsExampleDialog } from '../ventana-modal-eliminar-perro/ventana-modal-eliminar-perro.component';
+import { DialogContentExampleMostrarDialog } from '../mostrar-al-iniciar/mostrar-al-iniciar.component';
 
 
 @Component({
@@ -41,6 +42,10 @@ export class ListarPerrosComponent{
       this.totalItems = perros.length;
       this.updateDisplayedPerros();
     });
+    if(this.perros.length == 0){
+      this.openMostrarDialog();
+    }
+
   }
 
 
@@ -113,5 +118,14 @@ export class ListarPerrosComponent{
       }
     });
   }
+
+  openMostrarDialog() {
+    const dialogRef = this.dialog.open(DialogContentExampleMostrarDialog);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
 
 }

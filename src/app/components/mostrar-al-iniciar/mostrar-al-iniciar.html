@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Localstorage</h2>
+<mat-dialog-content class="mat-typography">
+
+  <p>Los elementos se ubican en el localstorage por lo que para mejor visualización deberá ingresar al menos uno. ¡Que tenga una buena experiencia!</p>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="false">Cancelar</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="onYesClick()">Aceptar</button>
+</mat-dialog-actions>
+

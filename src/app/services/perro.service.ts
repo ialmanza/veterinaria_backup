@@ -49,8 +49,13 @@ export class PerroService {
   }
 
   private getPerrosFromLocalStorage(): Perro[] {
+    if (localStorage.getItem('perros') === null) {
+      // alert('No hay perros en la base de datos. Por favor añada uno nuevo.');
+      return [];
+    }
     const storedPerros = localStorage.getItem('perros');
     return storedPerros ? JSON.parse(storedPerros) : [];
+
   }
 
   private savePerrosToLocalStorage(perro: Perro[]) {
