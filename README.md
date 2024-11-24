@@ -29,31 +29,32 @@ Sigue estos pasos para clonar, instalar y ejecutar el proyecto en tu máquina lo
    ng serve
 4. Abre tu navegador y navega a http://localhost:4200.
    
-## Estructura del proyecto
+## Estructura del Proyecto
 
-veterinaria_backup/
-├── src/
-│   ├── app/
-│   │   ├── components/
-│   │   │   ├── crear-perro/                  # Componente para crear un perro
-│   │   │   ├── editar/
-│   │   │   │   ├── dialog-content-edit-example-dialog/
-│   │   │   ├── comparar-peso/               # Comparación de pesos entre periodos de tiempo
-│   │   │   ├── filtrar-por/                 # Filtrar perros por estado 
-│   │   │   ├── grafico/                     # Gráficos interactivos
-│   │   │   ├── listar-perros/               # Listado de todos los perros
-│   │   │   ├── menu/                        # Menú principal
-│   │   │   ├── navigation/                  # Navegación de la aplicación
-│   │   │   ├── adoptado/                    # Gestión de perros adoptados 
-│   │   │   ├── perro-muerto/                # Gestión de perros fallecidos
-│   │   │   ├── ventana-modal-editar-perro/  # Modal para editar perro
-│   │   │   │   ├── dialog-content-edit-example-dialog/
-│   │   │   ├── ventana-modal-eliminar-perro/ # Modal para eliminar perro
-│   │   │   │   ├── dialog-animations-example-dialog/
-│   │   ├── services/                        # Servicios para manejar datos
-│   │   ├── models/                          # Modelos de datos
-│   ├── assets/                              # Archivos estáticos (imágenes, estilos)
-│   ├── environments/                        # Configuración de entornos
+- `veterinaria_backup/`
+  - `src/`
+    - `app/`
+      - `components/`
+        - `crear-perro/` - Componente para crear un perro.
+        - `editar/`
+          - `dialog-content-edit-example-dialog/`
+        - `comparar-peso/` - Comparación de pesos entre periodos.
+        - `filtrar-por/` - Filtrar perros por estado.
+        - `grafico/` - Gráficos interactivos.
+        - `listar-perros/` - Listado de todos los perros.
+        - `menu/` - Menú principal.
+        - `navigation/` - Navegación de la aplicación.
+        - `adoptado/` - Gestión de perros adoptados.
+        - `perro-muerto/` - Gestión de perros fallecidos.
+        - `ventana-modal-editar-perro/` - Modal para editar perro.
+          - `dialog-content-edit-example-dialog/`
+        - `ventana-modal-eliminar-perro/` - Modal para eliminar perro.
+          - `dialog-animations-example-dialog/`
+    - `services/` - Servicios para manejar datos.
+    - `models/` - Modelos de datos.
+  - `assets/` - Archivos estáticos (imágenes, estilos).
+  - `environments/` - Configuración de entornos.
+
 
 ## Contribuciones
 ¡Tu colaboración es bienvenida! Sigue estos pasos para contribuir:
