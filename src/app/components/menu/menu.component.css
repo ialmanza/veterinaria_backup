@@ -13,14 +13,14 @@
 
 .custom-button {
   background-color: transparent; /* Quita el fondo */
-  color: blue; /* Color del texto */
+  color: #007bff; /* Color del texto */
   border: none; /* Quita el borde */
   outline: none; /* Quita el contorno */
   font-size: 18px;
 }
 
 .custom-button:hover {
-  color: black; /* Color del texto al pasar el mouse */
+  color: black;
 }
 
 

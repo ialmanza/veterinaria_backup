@@ -1,9 +1,8 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA,AfterViewInit, ViewChild, ElementRef, OnInit} from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA,AfterViewInit, ViewChild, ElementRef, OnInit, inject} from '@angular/core';
 import { Chart, ChartType } from 'chart.js/auto';
 import { GraficoComponent } from '../grafico/grafico.component';
-import { Perro } from '../../models/Perro';
-import { PerroService } from '../../services/perro.service';
 import { FormsModule } from '@angular/forms';
+import { PerrosdbService,PerroDB } from '../../services/dataservice/perro.service';
 
 
 @Component({
@@ -17,10 +16,10 @@ import { FormsModule } from '@angular/forms';
 
 
 export class ComparaPesoComponent implements AfterViewInit, OnInit {
-  perros: Perro[] = [];
+  perros: PerroDB[] = [];
   id_perro: string = "";
 
-  perroSeleccionado: Perro | undefined;
+  perroSeleccionado: PerroDB | undefined;
   datagrafico: any = {
     fecha: '',
     peso: '',
@@ -28,6 +27,7 @@ export class ComparaPesoComponent implements AfterViewInit, OnInit {
 
   perrosFechas: [] = [];
   perrosPesos:[] = [];
+  perrosDBService = inject(PerrosdbService);
 
   @ViewChild('myChart') myChart!: ElementRef<HTMLCanvasElement>;
   chart: Chart | undefined;
@@ -45,11 +45,11 @@ export class ComparaPesoComponent implements AfterViewInit, OnInit {
     ]
   };
 
-  constructor(private perroService: PerroService) {
+  constructor() {
   }
 
   ngOnInit() {
-    this.perroService.getPerros().subscribe((perros: Perro[]) => {
+    this.perrosDBService.getAllPerrosDB().then((perros: PerroDB[]) => {
       this.perros = perros;
     });
   }
@@ -61,92 +61,45 @@ export class ComparaPesoComponent implements AfterViewInit, OnInit {
     });
   }
 
-  mostrarDataGrafico(): void {
-    const perro = this.perros.find(p => p.animalID === this.id_perro);
+
+
+  async añadirPesoYFechaDB(nuevoPeso: string) {
+    try {
+      let filtered = this.perros;
+      if (this.id_perro) {
+        filtered = filtered.filter(perro => perro.animalId === this.id_perro);
+      }
+
+      if (filtered.length > 0) {
+        const perro = filtered[0];
+        await this.perrosDBService.addPesoYFechaAlPerro(perro.id, nuevoPeso, this.datagrafico.fecha);
+
+      } else {
+        console.error('No se encontró el perro con el ID proporcionado');
+      }
+    } catch (error) {
+      console.error('Error al añadir peso al perro:', error);
+    }
+  }
+
+  async mostrarDataGrafico() {
+    const perro = this.perros.find(p => p.animalId === this.id_perro);
 
     if (perro) {
       this.perroSeleccionado = perro;
-      this.data.labels = this.perroService.getTodasLasFechas(this.perroSeleccionado.id);
-      this.data.datasets[0].data = this.perroService.getTodosLosPesos(this.perroSeleccionado.id);
+      this.data.labels = await this.perrosDBService.getTodasLasFechas(this.perroSeleccionado.id);
+      const pesos = await this.perrosDBService.getTodosLosPesos(this.perroSeleccionado.id);
+      this.data.datasets[0].data = pesos;
       this.chart?.update();
 
     }
   }
 
-  agregarDatos() {
-    const perro = this.perros.find(p => p.animalID === this.id_perro);
-    if (perro) {
-      this.perroSeleccionado = perro;
-      this.perroService.addFechaAlPerro(this.perroSeleccionado.id, this.datagrafico.fecha);
-      this.perroService.addPesoAlPerro(this.perroSeleccionado.id, this.datagrafico.peso);
-      this.mostrarDataGrafico();
-    } else {
-      console.log("Perro no encontrado");
-    }
-    this.id_perro = '';
-    this.datagrafico = {
-      fecha: '',
-      peso: '',
-    };
-  }
-
-
-  agregarFechas() {
-    const perro = this.perros.find(p => p.animalID === this.id_perro);
-    if (perro) {
-      this.perroSeleccionado = perro;
-      this.perroService.addFechaAlPerro(this.perroSeleccionado.id, this.datagrafico.fecha);
-      console.log("Fechas agregadas:", this.perroSeleccionado.animalID ,this.perroSeleccionado.fechaDePeso);
-    } else {
-      console.log("Perro no encontrado");
-    }
-  }
-
-  agregarPesos() {
-    const perro = this.perros.find(p => p.animalID === this.id_perro);
-    if (perro) {
-      this.perroSeleccionado = perro;
-      const ultimoPeso = this.perroService.getUltimoPeso(this.perroSeleccionado.id);
-      //  EN PROCESO TODAVIA
-      if(ultimoPeso && ultimoPeso < this.datagrafico.peso){
-        console.log(ultimoPeso)
-          alert("El peso ingresado es menor al anterior")
-      }
-
-      this.perroService.addPesoAlPerro(this.perroSeleccionado.id, this.datagrafico.peso);
-      console.log("Pesos agregados: ", this.perroSeleccionado.animalID ,this.perroSeleccionado.pesosGrafico);
-    } else {
-      console.log("Perro no encontrado");
-    }
-  }
-
-  obtenerPesos(id: any) {
-    const perro = this.perros.find(p => p.animalID === id);
-    if (perro) {
-      this.perroSeleccionado = perro;
-      this.perroService.getTodosLosPesos(this.perroSeleccionado.id);
-      console.log("Pesos obtenidos: ", this.perroSeleccionado.animalID ,this.perroSeleccionado.pesosGrafico);
-    } else {
-      console.log("Perro no encontrado");
-    }
-
-  }
-
-  obtenerFechas(id: any) {
-    const perro = this.perros.find(p => p.animalID === id);
-    if (perro) {
-      this.perroSeleccionado = perro;
-      this.perroService.getTodasLasFechas(this.perroSeleccionado.id);
-      console.log("Fechas obtenidas: ", this.perroSeleccionado.animalID ,this.perroSeleccionado.fechaDePeso);
-    } else {
-      console.log("Perro no encontrado");
-    }
-  }
-
   onSubmit() {
-    this.agregarDatos();
+    this.añadirPesoYFechaDB(this.datagrafico.peso);
     this.mostrarDataGrafico();
   }
+
 
 }
 

@@ -1,63 +1,70 @@
-<div>
-  <div class="container p-4">
-    <div class="row">
-      <div class="col-md-9 mx-auto">
-        <div class="card" >
-          <form (submit)="addPerro(edad,fechaPrimeraVacuna,lugarDeVacunacion,origen, box, observaciones)" #perroForm="ngForm">
-            <div class="form-group p-2 ">
+<div class="container p-4">
+  <div class="row">
+    <div class="col-md-9 mx-auto">
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="form">
+            <div class="form-group p-2">
+              <div class="mb-3">
 
-
-              <div class="form-group p-2">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="animalId" required [(ngModel)]="perro.animalId" name="animalId" #animalId="ngModel" placeholder="Ingrese el animal ID:">
-                  <div [hidden]="animalId.valid || animalId.pristine" class="custom-error">
-                    El ID es requerido.
-                  </div>
-                </div>
+                <input type="text" class="form-control" formControlName="animalId" id="animalId" placeholder="Ingrese el animal ID">
               </div>
 
-              <input type="number" class="form-control" placeholder="Ingrese la edad en meses:" #edad> <br>
-              <label for="fechaprimeravacuna"> Fecha de vacunación:</label>
-              <input type="date" class="form-control"  #fechaPrimeraVacuna> <br>
-              <textarea name="lugarDeVacunacion"  class="form-control" placeholder="Lugar de vacunación" cols="30" rows="10" #lugarDeVacunacion></textarea> <br>
+              <div class="mb-3">
 
-
-              <div class="form-group">
-                <div class="form-group">
-                  <input type="float" class="form-control" id="peso" required [(ngModel)]="perro.peso" name="peso" #peso="ngModel" placeholder="Ingrese el peso:">
-                  <div [hidden]="peso.valid || peso.pristine" class="custom-error">
-                    El Peso es requerido.
-                  </div>
-                </div>
+                <input type="number" class="form-control" formControlName="edad" id="edad" placeholder="Ingrese la edad en meses">
               </div>
 
+              <div class="mb-3">
 
-              <input type="text" class="form-control" placeholder="Ingrese el origen:" #origen> <br>
+                <input type="date" class="form-control" formControlName="fechaPrimeraVacuna" id="fechaPrimeraVacuna">
+              </div>
 
-              <div>
-                <label for="edificio">Edificio:</label>
-                <select class="form-control" id="edificio" name="edificio" [(ngModel)]="perro.edificio" #edificio="ngModel" ><br>
+              <div class="mb-3">
+
+                <textarea name="lugarDeVacunacion" class="form-control" formControlName="lugarVacunacion" id="lugarVacunacion" placeholder="Lugar de vacunación" rows="3"></textarea>
+              </div>
+
+              <div class="mb-3">
+
+                <input type="text" class="form-control" formControlName="peso" id="peso" placeholder="Ingrese el peso">
+              </div>
+
+              <div class="mb-3">
+
+                <input type="text" class="form-control" formControlName="origen" id="origen" placeholder="Ingrese el origen">
+              </div>
+
+              <div class="mb-3">
+                <select class="form-control" id="edificio" formControlName="edificio" [(ngModel)]="selectedEdificio">
                   <option value="" disabled selected>Seleccione el edificio</option>
-                  <option value="1">Edificio 1</option>
-                  <option value="2">Edificio 2</option>
-                  <option value="3">Edificio 3</option>
-                  <option value="4">Edificio 4</option>
+                  <option value="107">107</option>
+                  <option value="108">108</option>
                 </select>
               </div>
 
-              <input type="text" class="form-control" placeholder="Box:" #box> <br>
+              <div class="mb-3">
+                <select class="form-control" id="box" formControlName="box" [(ngModel)]="selectedBox">
+                  <option value="" disabled selected>Seleccione el box</option>
+                  <ng-container *ngIf="selectedEdificio === '107'">
+                    <option *ngFor="let box of boxes107" [value]="box">{{ box }}</option>
+                  </ng-container>
+                  <ng-container *ngIf="selectedEdificio === '108'">
+                    <option *ngFor="let box of boxes108" [value]="box">{{ box }}</option>
+                  </ng-container>
+                </select>
+              </div>
 
+              <div class="mb-3">
 
-
-
-
-              <textarea name="observaciones"  class="form-control" placeholder="Observaciones" cols="30" rows="10" #observaciones></textarea> <br><br>
-
+                <textarea name="observaciones" class="form-control" formControlName="observacion" id="observacion" placeholder="Observaciones" rows="3"></textarea>
+              </div>
 
               <div class="d-flex flex-column">
-                <button type="submit" class="btn btn-primary btn-block mb-2" [disabled]="!perroForm.form.valid">Agregar</button>
+                <button type="submit" class="btn btn-primary btn-block mb-2" [disabled]="!form.valid" (click)="insertarPerroDB()">Agregar</button>
               <button type="button" class="btn btn-danger btn-block mt-2" (click)="onClick()">Cancelar</button>
               </div>
+
             </div>
           </form>
         </div>
@@ -66,3 +73,4 @@
   </div>
 </div>
 
+<!-- <button (click)="insertarPerroDBNuevos()">Nuevos</button> -->

@@ -19,27 +19,7 @@ export class MenuComponent {
     const drawerClose = document.getElementById('drawer-close');
     const drawerHoverArea = document.getElementById('drawer-hover-area');
 
-  //   function openDrawer() {
-  //     drawerNavigation!.classList.remove('-translate-x-full');
-  //     drawerOverlay!.classList.remove('hidden');
-  //   }
 
-  //   function closeDrawer() {
-  //     drawerNavigation!.classList.add('-translate-x-full');
-  //     drawerOverlay!.classList.add('hidden');
-  //   }
-
-  //   drawerToggle!.addEventListener('click', function () {
-  //     if (drawerNavigation!.classList.contains('-translate-x-full')) {
-  //       openDrawer();
-  //     } else {
-  //       closeDrawer();
-  //     }
-  //   });
-
-  //   drawerClose!.addEventListener('click', closeDrawer);
-  //   drawerOverlay!.addEventListener('click', closeDrawer);
-  // }
   function openDrawer() {
     drawerNavigation!.classList.remove('drawer-hidden', '-translate-x-full');
     drawerNavigation!.classList.add('drawer-visible', 'translate-x-0');

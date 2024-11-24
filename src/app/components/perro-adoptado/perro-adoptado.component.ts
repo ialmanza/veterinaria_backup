@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { PerroService } from '../../services/perro.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Perro } from '../../models/Perro';
 import { DialogContentEditExampleDialog } from '../ventana-modal-editar-perro/ventana-modal-editar-perro.component';
 import { DialogAnimationsExampleDialog } from '../ventana-modal-eliminar-perro/ventana-modal-eliminar-perro.component';
 import { CommonModule } from '@angular/common';
 import * as XLSX from 'xlsx';
-
+import { PerrosdbService, PerroDB } from '../../services/dataservice/perro.service';
 @Component({
   selector: 'app-adoptado',
   standalone: true,
@@ -16,64 +15,41 @@ import * as XLSX from 'xlsx';
   styleUrl: './perro-adoptado.component.css'
 })
 export class AdoptadoComponent {
-  perros: Perro[] = [];
-  filteredPerros: Perro[] = [];
+  perros: PerroDB[] = [];
+  filteredPerros: PerroDB[] = [];
   searchTerm: string = 'Si';
-  displayedPerros: Perro[] = [];
+  displayedPerros: PerroDB[] = [];
 
   pageSizeOptions = [5, 10, 20];
   pageSize = this.pageSizeOptions[0];
   currentPage = 0;
   totalItems = 0;
+  perrosDBService = inject(PerrosdbService);
 
-  constructor(private perroService: PerroService, public dialog: MatDialog) {}
+  constructor( public dialog: MatDialog) {}
 
 
   ngOnInit() {
-    this.perroService.getPerros().subscribe((perros: Perro[]) => {
+    this.perrosDBService.getAllPerrosDB().then((perros: PerroDB[]) => {
       this.perros = perros;
-      this.filteredPerros = perros;
-      this.totalItems = perros.length;
-      this.updateDisplayedPerros();
-      this.filter();
+      this.filter(this.searchTerm);
+    }).catch(error => {
+      console.error("Error al obtener los datos:", error);
     });
   }
 
-  openEditDialog(perro: Perro) {
-    const dialogRef = this.dialog.open(DialogContentEditExampleDialog, {
-      data: perro
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.perroService.updatePerro(perro);
-      }
-    });
-  }
+  filter(query: string) {
+    this.filteredPerros = this.perros.filter(perro => {
+      const adoptado = perro.estadoAdoptado ? perro.estadoAdoptado.toString().toLowerCase() : '';
 
-  deletePerro(perro: Perro) {
-    const dialogRef = this.dialog.open(DialogAnimationsExampleDialog, {
-      width: '250px',
-      data: perro
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.perroService.deletePerro(perro.id);
-      }
-    });
-  }
-
-  filter() {
-    this.filteredPerros = this.perros.filter(perro =>
-      perro.estadoAdopcion.toLowerCase().includes(this.searchTerm.toLowerCase())
-
-
-    );
+      return adoptado.includes(query.toLowerCase()) ;
+  });
     this.totalItems = this.filteredPerros.length;
     this.currentPage = 0;
     this.updateDisplayedPerros();
   }
+
 
   updateDisplayedPerros() {
     const start = this.currentPage * this.pageSize;
@@ -111,25 +87,21 @@ export class AdoptadoComponent {
   }
 
   exportToExcel(): void {
-    const filteredData = this.filteredPerros.map(perro => {
-      const { origen, animalID, observaciones, fechaprimeravacuna, lugarDeVacunacion, edad, peso, edificio, box, ...rest } = perro;
-      return {
-        Origen: origen,
-        AnimalId: animalID,
-        'Observaciones': observaciones,
-        'Fecha de vacunación': fechaprimeravacuna,
-        'Lugar de vacunación': lugarDeVacunacion,
-        Edad: edad,
-        Peso: peso,
-        'Edificio': edificio,
-        Box: box,
-
-
-      };
-    });
+    const filteredData = this.filteredPerros.map(perro => ({
+      AnimalId: perro.animalId,
+      Origen: perro.origen,
+      'Fecha de vacunación': perro.fechaPrimeraVacuna,
+      'Lugar de vacunación': perro.lugarVacunacion,
+      Edad: perro.edad,
+      Peso: perro.peso,
+      Edificio: perro.edificio,
+      Box: perro.box,
+      Observaciones: perro.observacion,
+    }));
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(filteredData);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Perros');
-    XLSX.writeFile(wb, 'Adoptados.xlsx');
+    XLSX.writeFile(wb, 'PerrosAdoptados.xlsx');
   }
+
 }

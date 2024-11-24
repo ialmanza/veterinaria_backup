@@ -2,24 +2,24 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  background-color: #fff; /* Puedes ajustar el color de fondo según tu preferencia */
+  background-color: #fff;
   transition: 0.3s; /* Transición suave para las animaciones */
-  overflow: hidden; /* Asegura que los contenidos internos no se desborden */
+  overflow: hidden;
 }
 
 .card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); /* Aumenta la sombra al pasar el mouse */
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
  }
 
  /* Estilos para el formulario dentro de la tarjeta */
 .form-group {
-  margin-bottom: 15px; /* Añade margen entre los grupos de formulario */
+  margin-bottom: 15px;
  }
 
  /* Estilos para los campos de entrada del formulario */
  .form-control {
-  border-radius: 5px; /* Redondea las esquinas de los campos de entrada */
-  border: 1px solid #ced4da; /* Establece un borde para los campos de entrada */
+  border-radius: 5px;
+  border: 1px solid #ced4da;
 
  }
 
@@ -32,23 +32,23 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  transition: 0.3s; /* Transición suave para las animaciones */
-  overflow: hidden; /* Asegura que los contenidos internos no se desborden */
-  position: sticky; /* Permite que la tarjeta se "pegue" al hacer scroll */
-  top: 20px; /* Ajusta la distancia desde la parte superior */
-  margin-left: auto; /* Empuja la tarjeta hacia la derecha */
-  background-color: #f8f9fa; /* Color de fondo */
+  transition: 0.3s;
+  overflow: hidden;
+  position: sticky;
+  top: 20px;
+  margin-left: auto;
+  background-color: #f8f9fa;
 }
 
 .btn {
-  border-radius: 5px; /* Redondea las esquinas de los botones */
+  border-radius: 5px;
   transition: border-color 0.3s, box-shadow 0.3s;
 
  }
 
  /* Estilos específicos para el mat-tab-group */
  mat-tab-group {
-  margin-top: 20px; /* Añade margen en la parte superior del grupo de pestañas */
+  margin-top: 20px;
  }
 
  /* Estilos para los títulos de las pestañas */
@@ -58,39 +58,39 @@
 
  /* Estilos para el contenido de las pestañas */
  mat-tab-body {
-  padding: 10px; /* Añade padding alrededor del contenido de las pestañas */
+  padding: 10px;
  }
 
  /* Estilo para el elemento select */
 select.form-control {
-  border-radius: 5px; /* Redondea las esquinas del select */
-  border: 1px solid #ced4da; /* Establece un borde para el select */
-  padding: 10px; /* Añade padding para que el contenido no esté pegado a los bordes */
-  background-color: #fff; /* Fondo blanco para el select */
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  padding: 10px;
+  background-color: #fff;
   transition: border-color 0.3s, box-shadow 0.3s; /* Transiciones suaves para el borde y la sombra */
 }
 
 /* Estilo para el select al hacer focus */
 select.form-control:focus {
-  border-color: #80bdff; /* Cambia el color del borde al enfocarse */
-  box-shadow: 0 0 5px rgba(128, 189, 255, 0.5); /* Añade una sombra al enfocarse */
+  border-color: #80bdff;
+  box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
   outline: none; /* Quita el borde predeterminado del navegador */
 }
 
 /* Estilo para las opciones dentro del select */
 select.form-control option {
-  padding: 10px; /* Añade padding a las opciones */
-  background-color: #fff; /* Fondo blanco para las opciones */
+  padding: 10px;
+  background-color: #fff;
 }
 
 /* Cambia el color de fondo y el color del texto al pasar el ratón sobre las opciones */
 select.form-control option:hover {
-  background-color: #f1f1f1; /* Color de fondo al pasar el ratón */
+  background-color: #f1f1f1;
 }
 
 /* Asegura que el select tenga un margen inferior consistente con otros elementos del formulario */
 .form-group select.form-control {
-  margin-bottom: 15px; /* Añade margen inferior */
+  margin-bottom: 15px;
 }
 
 /* Añade un margen inferior al select */

@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { PerroService } from '../../services/perro.service';
-import { MatDialog } from '@angular/material/dialog';
-import { Perro } from '../../models/Perro';
-import { DialogContentEditExampleDialog } from '../ventana-modal-editar-perro/ventana-modal-editar-perro.component';
+import { Component,AfterViewInit, inject, CUSTOM_ELEMENTS_SCHEMA, Inject, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { DialogAnimationsExampleDialog } from '../ventana-modal-eliminar-perro/ventana-modal-eliminar-perro.component';
 import { CommonModule } from '@angular/common';
-
+import { PerrosdbService, PerroDB } from '../../services/dataservice/perro.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormField } from '@angular/material/form-field';
 @Component({
   selector: 'app-editar',
   standalone: true,
@@ -15,21 +14,22 @@ import { CommonModule } from '@angular/common';
   styleUrl: './editar.component.css'
 })
 export class EditarComponent {
-  perros: Perro[] = [];
-  filteredPerros: Perro[] = [];
+  perros: PerroDB[] = [];
+  filteredPerros: PerroDB[] = [];
   searchTerm: string = '';
-  displayedPerros: Perro[] = [];
+  displayedPerros: PerroDB[] = [];
 
   pageSizeOptions = [5, 10, 20];
   pageSize = this.pageSizeOptions[0];
   currentPage = 0;
   totalItems = 0;
+  perrosDBService = inject(PerrosdbService);
 
-  constructor(private perroService: PerroService, public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) {}
 
 
   ngOnInit() {
-    this.perroService.getPerros().subscribe((perros: Perro[]) => {
+    this.perrosDBService.getAllPerrosDB().then((perros: PerroDB[]) => {
       this.perros = perros;
       this.filteredPerros = perros;
       this.totalItems = perros.length;
@@ -37,19 +37,33 @@ export class EditarComponent {
     });
   }
 
-  openEditDialog(perro: Perro) {
+  ngAfterViewInit(): void {
+    this.perrosDBService.getAllPerrosDB();
+    this.perrosDBService.getAllPerrosDB().then(data => {
+      this.perros = data;
+      this.filteredPerros = data;
+      this.displayedPerros = data;
+      this.totalItems = data.length;
+      this.updateDisplayedPerros();
+    }).catch(error => {
+      console.error("Error al obtener los datos:", error);
+    });
+
+  }
+
+  openEditDialog(perro: PerroDB) {
     const dialogRef = this.dialog.open(DialogContentEditExampleDialog, {
       data: perro
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.perroService.updatePerro(perro);
+        this.perrosDBService.editarPerroDB(perro, perro.id);
       }
     });
   }
 
-  deletePerro(perro: Perro) {
+  deletePerro(perro: PerroDB) {
     const dialogRef = this.dialog.open(DialogAnimationsExampleDialog, {
       width: '250px',
       data: perro
@@ -57,22 +71,24 @@ export class EditarComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.perroService.deletePerro(perro.id);
+        this.perrosDBService.eliminarPerroDb(perro.id);
       }
     });
   }
 
   filter(query: string) {
-    this.filteredPerros = this.perros.filter(perro =>
-      perro.animalID.toLowerCase().includes(query.toLowerCase()) ||
-      perro.origen.toLowerCase().includes(query.toLowerCase()) ||
-      perro.box.toLowerCase().includes(query.toLowerCase()) ||
-      perro.edificio.toLowerCase().includes(query.toLowerCase()) ||
-      perro.fechaprimeravacuna.toLowerCase().includes(query.toLowerCase()) ||
-      perro.lugarDeVacunacion.toLowerCase().includes(query.toLowerCase()) ||
-      perro.peso.toLowerCase().includes(query.toLowerCase())
+    this.filteredPerros = this.perros.filter(perro => {
+      const animalId = perro.animalId ? perro.animalId.toString().toLowerCase() : '';
+      const origen = perro.origen ? perro.origen.toString().toLowerCase() : '';
+      const box = perro.box ? perro.box.toString().toLowerCase() : '';
+      const edificio = perro.edificio ? perro.edificio.toString().toLowerCase() : '';
+      const lugarDeVacunacion = perro.lugarVacunacion ? perro.lugarVacunacion.toString().toLowerCase() : '';
+      const fecha = perro.fechaPrimeraVacuna ? perro.fechaPrimeraVacuna.toString().toLowerCase() : '';
 
-    );
+      return animalId.includes(query.toLowerCase()) || origen.includes(query.toLowerCase()) ||
+         box.includes(query.toLowerCase()) || edificio.includes(query.toLowerCase()) || lugarDeVacunacion.includes(query.toLowerCase()) ||
+         fecha.includes(query.toLowerCase());
+  });
     this.totalItems = this.filteredPerros.length;
     this.currentPage = 0;
     this.updateDisplayedPerros();
@@ -113,4 +129,61 @@ export class EditarComponent {
     }
   }
 
+
+}
+
+
+@Component({
+  selector: 'dialog-content-example-dialog',
+  templateUrl: 'editar-perro.html',
+  standalone: true,
+  imports: [MatDialogModule, MatButtonModule, CommonModule, FormsModule, MatFormField, ReactiveFormsModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+
+
+class DialogContentEditExampleDialog implements OnInit {
+
+  @Input() perros: PerroDB | undefined;
+  editing: any;
+  boxes107 = ['B08','B10', 'B11','B12', 'B13'];
+  boxes108 = ['B01', 'B02', 'B03', 'B04'];
+
+  form: FormGroup = new FormGroup({
+    edificio: new FormControl(''),
+    box: new FormControl('')
+  });
+
+  constructor (@Inject(MAT_DIALOG_DATA) public data: PerroDB, public dialogRef: MatDialogRef<DialogContentEditExampleDialog>, private perrosService: PerrosdbService) {
+
+  }
+
+  ngOnInit() {
+    this.form = new FormGroup({
+      edificio: new FormControl(this.data.edificio),
+      box: new FormControl(this.data.box)
+    });
+  }
+
+
+  onNoClick(): void {
+    this.dialogRef.close(false);
+  }
+
+  onYesClick(): void {
+    this.dialogRef.close(true);
+  }
+
+  toggleEdit() {
+    this.editing = !this.editing;
+    console.log(`Editing: ${this.editing}`); // Agregado para debug
+  }
+
+  saveChanges() {
+    if (this.perros) {
+      this.perrosService.editarPerroDB(this.perros, this.perros.id);
+      console.log('Perro actualizado:', this.perros); // Agregado para debug
+    }
+    this.toggleEdit(); // Desactiva la edición después de guardar
+  }
 }

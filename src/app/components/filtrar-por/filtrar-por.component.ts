@@ -1,114 +1,79 @@
-import { Component} from '@angular/core';
-import { PerroComponent } from '../perro/perro.component';
-import { PerroService } from '../../services/perro.service';
-import { Perro } from '../../models/Perro';
+import { Component, inject } from '@angular/core';
+import { PerrosdbService, PerroDB } from '../../services/dataservice/perro.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { FilterPipe } from '../../pipes/filter.pipe';
 import * as XLSX from 'xlsx';
-import { DialogContentEditExampleDialog } from '../ventana-modal-editar-perro/ventana-modal-editar-perro.component';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogAnimationsExampleDialog } from '../ventana-modal-eliminar-perro/ventana-modal-eliminar-perro.component';
-
-import {NestedTreeControl} from '@angular/cdk/tree';
-import {MatTreeNestedDataSource, MatTreeModule} from '@angular/material/tree';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-
-interface FoodNode {
-  name: string;
-  children?: FoodNode[];
-  showMenu?: boolean; // Añadido
-}
-
-const TREE_DATA: FoodNode[] = [
-  {
-    name: 'Edificio 1',
-    children: [{name: 'Box 1'}, {name: 'Box 2'}, {name: 'Box 3'}],
-  },
-  {
-    name: 'Edificio 2',
-    children: [{name: 'Box 4'}, {name: 'Box 5'}, {name: 'Box 6'}],
-  },
-  {
-    name: 'Edificio 3',
-    children: [{name: 'Box 7'}, {name: 'Box 8'}, {name: 'Box 9'}],
-  },
-  {
-    name: 'Edificio 4',
-    children: [{name: 'Box 10'}, {name: 'Box 11'}, {name: 'Box 12'}],
-  }
-
-];
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
   selector: 'app-filtrar-por',
   standalone: true,
-  imports: [ CommonModule, FormsModule, PerroComponent, FilterPipe, DialogContentEditExampleDialog, DialogAnimationsExampleDialog, MatTreeModule, MatIconModule, MatButtonModule],
+  imports: [ CommonModule, FormsModule],
   templateUrl: './filtrar-por.component.html',
-  styleUrl: './filtrar-por.component.css'
+  styleUrl: './filtrar-por.component.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class FiltrarPorComponent {
-  perros: Perro[] = [];
-  filteredPerros: Perro[] = [];
+  perrosDBService = inject(PerrosdbService);
+  perros: PerroDB[] = [];
+  filteredPerros: PerroDB[] = [];
   searchTerm: string = '';
-  displayedPerros: Perro[] = [];
+  selectedEdificio = '';
+  selectedBox = '';
 
   pageSizeOptions = [5, 10, 20];
   pageSize = this.pageSizeOptions[0];
   currentPage = 0;
   totalItems = 0;
+  displayedPerros: PerroDB[] = [];
 
-  treeControl = new NestedTreeControl<FoodNode>(node => node.children);
-  dataSource = new MatTreeNestedDataSource<FoodNode>();
-  showMenu?: boolean = false;
+  boxes107 = ['B08','B10', 'B11','B12', 'B13'];
+  boxes108 = ['B01', 'B02', 'B03', 'B04'];
 
-
-  constructor(private perroService: PerroService, private dialog: MatDialog) {
-    this.dataSource.data = TREE_DATA;
-  }
-
-
-  ngOnInit() {
-    this.perroService.getPerros().subscribe((perros: Perro[]) => {
-      this.perros = perros;
-      this.filteredPerros = perros;
-      this.totalItems = perros.length;
+  ngAfterViewInit(): void {
+    this.perrosDBService.getAllPerrosDB().then(data => {
+      this.perros = data;
+      this.filteredPerros = data;
+      this.displayedPerros = data;
+      this.totalItems = data.length;
       this.updateDisplayedPerros();
+    }).catch(error => {
+      console.error("Error al obtener los datos:", error);
     });
   }
 
-  hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
-
-  onNodeClick(event: MouseEvent,node: FoodNode) {
-    const lastWord = node.name.split(' ').pop();
-    if (lastWord) {
-      this.search(lastWord);
+  filterDB() {
+    let filtered = this.perros;
+    if (this.selectedEdificio) {
+      filtered = filtered.filter(perro => perro.edificio === this.selectedEdificio);
     }
+    if (this.selectedBox) {
+      filtered = filtered.filter(perro => perro.box === this.selectedBox);
+    }
+    this.filteredPerros = filtered;
+    this.totalItems = filtered.length;
+    this.currentPage = 0;  // Reset to first page
+    this.updateDisplayedPerros();
   }
 
-  search(query: string) {
-    this.filteredPerros = this.perros.filter(perro =>
-      //perro.animalID.toLowerCase().includes(query.toLowerCase()) ||
-      //perro.origen.toLowerCase().includes(query.toLowerCase()) ||
-      perro.box.toLowerCase().includes(query.toLowerCase()) /*||
-      perro.edificio.toLowerCase().includes(query.toLowerCase())*/
-    );
-    this.totalItems = this.filteredPerros.length;
-    this.currentPage = 0;
-    this.updateDisplayedPerros();
 
-  }
 
-  filter(query: string) {
-    this.filteredPerros = this.perros.filter(perro =>
-      perro.animalID.toLowerCase().includes(query.toLowerCase()) ||
-      perro.origen.toLowerCase().includes(query.toLowerCase())
-
-    );
-    this.totalItems = this.filteredPerros.length;
-    this.currentPage = 0;
-    this.updateDisplayedPerros();
+  exportToExcel(): void {
+    const filteredData = this.filteredPerros.map(perro => ({
+      Origen: perro.origen,
+      AnimalId: perro.animalId,
+      Observaciones: perro.observacion,
+      'Fecha de vacunación': perro.fechaPrimeraVacuna,
+      'Lugar de vacunación': perro.lugarVacunacion,
+      Edad: perro.edad,
+      Peso: perro.peso,
+      Edificio: perro.edificio,
+      Box: perro.box,
+    }));
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(filteredData);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Perros');
+    XLSX.writeFile(wb, 'Perros.xlsx');
   }
 
   updateDisplayedPerros() {
@@ -146,60 +111,4 @@ export class FiltrarPorComponent {
     }
   }
 
-
-   exportToExcel(): void {
-    const filteredData = this.filteredPerros.map(perro => {
-      const { origen, animalID, observaciones, fechaprimeravacuna, lugarDeVacunacion, edad, peso, edificio, box, ...rest } = perro;
-      return {
-        Origen: origen,
-        AnimalId: animalID,
-        'Observaciones': observaciones,
-        'Fecha de vacunación': fechaprimeravacuna,
-        'Lugar de vacunación': lugarDeVacunacion,
-        Edad: edad,
-        Peso: peso,
-        'Edificio': edificio,
-        Box: box,
-
-
-      };
-    });
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(filteredData);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Perros');
-    XLSX.writeFile(wb, 'Perros.xlsx');
-  }
-
-  openEditDialog(perro: Perro) {
-    const dialogRef = this.dialog.open(DialogContentEditExampleDialog, {
-      data: perro
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.perroService.updatePerro(perro);
-      }
-    });
-  }
-
-  deletePerro(perro: Perro) {
-    const dialogRef = this.dialog.open(DialogAnimationsExampleDialog, {
-      width: '250px',
-      data: perro
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.perroService.deletePerro(perro.id);
-      }
-    });
-  }
-
-  mostrarTodos() {
-    this.filteredPerros = this.perros;
-    this.totalItems = this.perros.length;
-    this.currentPage = 0;
-    this.updateDisplayedPerros();
-  }
 }
-

@@ -1,9 +1,7 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, OnInit, inject } from '@angular/core';
 import { Chart, ChartType } from 'chart.js/auto';
-import { Perro } from '../../models/Perro';
-import { PerroService } from '../../services/perro.service';
 import { FormsModule } from '@angular/forms';
-
+import { PerrosdbService, PerroDB } from '../../services/dataservice/perro.service';
 @Component({
   selector: 'app-grafico',
   standalone: true,
@@ -13,13 +11,14 @@ import { FormsModule } from '@angular/forms';
 })
 export class GraficoComponent implements AfterViewInit, OnInit {
 
- @ViewChild('myChart') myChart!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('myChart') myChart!: ElementRef<HTMLCanvasElement>;
   chart: Chart | undefined;
-  perros: Perro[] = [];
+  perros: PerroDB[] = [];
   id_perro: string = "";
-  perroSeleccionado: Perro | undefined;
+  perroSeleccionado: PerroDB | undefined;
   perrosFechas: [] = [];
   perrosPesos:[] = [];
+  perrosDBService = inject(PerrosdbService);
 
   data = {
     labels: [] as string[],
@@ -33,11 +32,10 @@ export class GraficoComponent implements AfterViewInit, OnInit {
       }
     ]
   };
-  constructor(private perroService: PerroService) { }
+  constructor() { }
 
-
-  ngOnInit(): void {
-    this.perroService.getPerros().subscribe(perros => {
+  ngOnInit() {
+    this.perrosDBService.getAllPerrosDB().then((perros: PerroDB[]) => {
       this.perros = perros;
     });
   }
@@ -47,21 +45,21 @@ export class GraficoComponent implements AfterViewInit, OnInit {
       type: 'line' as ChartType,
       data: this.data
     });
+
   }
 
-  mostrarDataGrafico(): void {
-    const perro = this.perros.find(p => p.animalID === this.id_perro);
+  async mostrarDataGrafico() {
+    const perro = this.perros.find(p => p.animalId === this.id_perro);
 
     if (perro) {
       this.perroSeleccionado = perro;
-      this.data.labels = this.perroService.getTodasLasFechas(this.perroSeleccionado.id);
-      this.data.datasets[0].data = this.perroService.getTodosLosPesos(this.perroSeleccionado.id);
+      this.data.labels = await this.perrosDBService.getTodasLasFechas(this.perroSeleccionado.id);
+      const pesos = await this.perrosDBService.getTodosLosPesos(this.perroSeleccionado.id);
+      this.data.datasets[0].data = pesos;
       this.chart?.update();
 
     }
   }
-
-
 
 }
 

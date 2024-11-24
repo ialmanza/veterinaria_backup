@@ -1,10 +1,9 @@
-<h2 mat-dialog-title>{{data.animalID}}</h2>
 
 <mat-dialog-content class="mat-typography">
 
   <div>
     <label for="animalID">AnimalId:</label> <br>
-    <input class="form-control" id="animalID" type="text" placeholder="{{data.animalID}}" [(ngModel)]="data.animalID" name="animalID"/> <br>
+    <input class="form-control" id="animalID" type="text" placeholder="{{data.animalId}}" [(ngModel)]="data.animalId" name="animalID"/> <br>
   </div>
 
   <div>
@@ -14,12 +13,12 @@
 
   <div>
     <label for="fechaprimeravacuna">Fecha de vacunación:</label> <br>
-    <input class="form-control" id="fechaprimeravacuna" type="date" placeholder="{{data.fechaprimeravacuna}}" [(ngModel)]="data.fechaprimeravacuna" name="fechaprimeravacuna"/> <br>
+    <input class="form-control" id="fechaprimeravacuna" type="date" placeholder="{{data.fechaPrimeraVacuna}}" [(ngModel)]="data.fechaPrimeraVacuna" name="fechaprimeravacuna"/> <br>
   </div>
 
   <div>
     <label for="lugarDeVacunacion">Lugar de vacunación:</label> <br>
-    <textarea class="form-control" id="lugarDeVacunacion" type="text" placeholder="{{data.lugarDeVacunacion}}" [(ngModel)]="data.lugarDeVacunacion" name="lugarDeVacunacion"></textarea> <br>
+    <textarea class="form-control" id="lugarDeVacunacion" type="text" placeholder="{{data.lugarVacunacion}}" [(ngModel)]="data.lugarVacunacion" name="lugarDeVacunacion"></textarea> <br>
   </div>
 
   <div>
@@ -28,20 +27,27 @@
   </div>
 
 
-  <div>
-    <label for="edificio">Edificio:</label>
-    <select class="form-control" id="edificio" name="edificio" [(ngModel)]="data.edificio" #edificio="ngModel" ><br>
+  <div [formGroup]="form">
+    <label for="edificio">Edificio:</label> <br>
+    <select class="form-control" id="edificio" formControlName="edificio" [(ngModel)]="data.edificio">
       <option value="" disabled selected>Seleccione el edificio</option>
-      <option value="1">Edificio 1</option>
-      <option value="2">Edificio 2</option>
-      <option value="3">Edificio 3</option>
-      <option value="4">Edificio 4</option>
+      <option value="107">107</option>
+      <option value="108">108</option>
     </select>
-  </div><br>
+  </div>
+  <br>
 
-  <div>
-    <label for="box">Box:</label> <br>
-    <input class="form-control" id="box" type="text" placeholder="{{data.box}}" [(ngModel)]="data.box" name="box"/> <br>
+  <div [formGroup]="form">
+    <label for="box">Box:</label>
+    <select class="form-control" id="box" formControlName="box" [(ngModel)]="data.box">
+      <option value="" disabled selected>Seleccione el box</option>
+      <ng-container *ngIf="data.edificio === '107'">
+        <option *ngFor="let box of boxes107" [value]="box">{{ box }}</option>
+      </ng-container>
+      <ng-container *ngIf="data.edificio === '108'">
+        <option *ngFor="let box of boxes108" [value]="box">{{ box }}</option>
+      </ng-container>
+    </select>
   </div>
 
   <div>
@@ -50,17 +56,17 @@
   </div>
 
   <div>
-    <label for="estadoAdopcion">Estado de adopción:</label>
-    <select class="form-control" id="estadoAdopcion" name="estadoAdopcion" [(ngModel)]="data.estadoAdopcion" #estadoAdopcion="ngModel" ><br>
+    <p>Estado de adopción:</p>
+    <select class="form-control" id="estadoAdopcion" name="estadoAdopcion" [(ngModel)]="data.estadoAdoptado" #estadoAdopcion="ngModel" ><br>
       <option value="" disabled selected>¿Está adoptado?</option>
       <option value="Si">Si</option>
       <option value="No">No</option>
     </select>
-  </div><br>
+  </div>
 
 
   <div>
-    <label for="estadoMuerto">Estado de vida:</label>
+    <p>Estado de vida:</p>
     <select class="form-control" id="estadoMuerto" name="estadoMuerto" [(ngModel)]="data.estadoMuerto" #estadoMuerto="ngModel" >
       <option value="" disabled selected>¿Está muerto?</option>
       <option value="Si">Si</option>
@@ -71,7 +77,7 @@
 
   <div>
     <label for="observaciones">Observaciones:</label> <br>
-    <textarea class="form-control" id="observaciones" type="text" placeholder="{{data.observaciones}}" [(ngModel)]="data.observaciones" name="observaciones"></textarea> <br>
+    <textarea class="form-control" id="observaciones" type="text" placeholder="{{data.observacion}}" [(ngModel)]="data.observacion" name="observaciones"></textarea> <br>
   </div>
 
 
@@ -80,5 +86,6 @@
   <button mat-button (click)="onNoClick()">Cancelar</button>
       <button mat-button (click)="onYesClick()" cdkFocusInitial>Editar</button>
 </mat-dialog-actions>
+
 
 

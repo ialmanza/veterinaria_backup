@@ -3,7 +3,6 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef} from '@angula
 import {MatButtonModule} from '@angular/material/button';
 import { Perro } from '../../models/Perro';
 import { CommonModule } from '@angular/common';
-import { PerroService } from '../../services/perro.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatFormField } from '@angular/material/form-field';
 
@@ -39,7 +38,7 @@ export class VentanaModalEditarPerroComponent {
 
     @Input() perros: Perro | undefined;
     editing: any;
-    constructor (@Inject(MAT_DIALOG_DATA) public data: Perro, public dialogRef: MatDialogRef<DialogContentEditExampleDialog>, private perrosService: PerroService) {
+    constructor (@Inject(MAT_DIALOG_DATA) public data: Perro, public dialogRef: MatDialogRef<DialogContentEditExampleDialog>) {
 
     }
 
@@ -58,7 +57,7 @@ export class VentanaModalEditarPerroComponent {
 
     saveChanges() {
       if (this.perros) {
-        this.perrosService.updatePerro(this.perros);
+
         console.log('Perro actualizado:', this.perros); // Agregado para debug
       }
       this.toggleEdit(); // Desactiva la edición después de guardar

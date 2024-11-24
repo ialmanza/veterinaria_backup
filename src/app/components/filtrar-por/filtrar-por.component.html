@@ -1,41 +1,38 @@
-<br>
 <div class="container">
   <div class="row">
-    <div class="col">
-
-    </div>
-  </div> <br><br>
-
-  <p class="clasep">Buscar por...</p>
- <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree custom-tree">
+    <div class="col"></div>
+  </div>
+  <br><br>
 
 
-  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-    <span (click)="onNodeClick($event, node)" style="cursor:pointer;" class="tree-node">
-      {{node.name}}
-    </span>
-  </mat-tree-node>
-  <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild" [class.mat-tree-node-expanded]="treeControl.isExpanded(node)">
-    <div class="mat-tree-node">
-      <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
-        <mat-icon class="mat-icon-rtl-mirror">
-          {{treeControl.isExpanded(node)? 'expand_more' : 'chevron_right'}}
-        </mat-icon>
-      </button>
-      <span (click)="onNodeClick($event, node)" style="cursor:pointer;" class="tree-node">
-        {{node.name}}
-      </span>
-    </div>
-    <div [class.example-tree-invisible]="treeControl.isExpanded(node)" role="group">
-      <ng-container matTreeNodeOutlet></ng-container>
-    </div>
-  </mat-nested-tree-node>
-</mat-tree>
-<p (click)="mostrarTodos()" class="clasep">Mostrar Todos</p>
+  <div>
+    <label for="edificio">Edificio:</label>
+    <select class="form-control" id="edificio" [(ngModel)]="selectedEdificio" (change)="filterDB()">
+      <option value="" disabled selected>Seleccione el edificio</option>
+      <option value="107">107</option>
+      <option value="108">108</option>
+    </select>
+  </div>
+  <br>
 
+  <div>
+    <label for="box">Box:</label>
+    <select class="form-control" id="box" [(ngModel)]="selectedBox" (change)="filterDB()">
+      <option value="" disabled selected>Seleccione el box</option>
+      <ng-container *ngIf="selectedEdificio === '107'">
+        <option *ngFor="let box of boxes107" [value]="box">{{ box }}</option>
+      </ng-container>
+      <ng-container *ngIf="selectedEdificio === '108'">
+        <option *ngFor="let box of boxes108" [value]="box">{{ box }}</option>
+      </ng-container>
+    </select>
+  </div>
+<br>
   <div class="row d-flex">
     <div class="col">
       <button class="btn btn-primary mb-3" (click)="exportToExcel()">Exportar a Excel</button>
+      <div class="table-responsive">
+
       <table class="table table-striped">
         <thead>
           <tr>
@@ -48,69 +45,49 @@
             <th scope="col">Edificio</th>
             <th scope="col">Box</th>
             <th scope="col">Observaciones</th>
-            <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let perro of displayedPerros">
-            <td>{{perro.animalID}}</td>
-            <td>{{perro.edad}}</td>
-            <td>{{perro.fechaprimeravacuna}}</td>
-            <td>{{perro.lugarDeVacunacion}}</td>
-            <td>{{perro.peso}}</td>
-            <td>{{perro.origen}}</td>
-            <td>{{perro.edificio}}</td>
-            <td>{{perro.box}}</td>
-            <td>{{perro.observaciones}}</td>
-            <td>
-              <div class="header-actions d-flex align-items-center">
-                <ul class="skills-list d-flex align-items-center">
-                  <!-- EDITAR -->
-                    <li class="icon-container">
-                      <button (click)="openEditDialog(perro)">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                          <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
-                          <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
-                        </svg>
-                    </button>
-                    </li>
-
-
-                  <!-- ELIMINAR -->
-                    <li class="icon-container">
-                      <button (click)="deletePerro(perro)">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                          <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                    </li>
-
-                 </ul>
-
-              </div>
-            </td>
+          <tr *ngIf="perrosDBService.loading()">
+            <td colspan="9">Cargando...</td>
           </tr>
-
+          <tr *ngFor="let perro of displayedPerros">
+            <td>{{ perro.animalId }}</td>
+            <td>{{ perro.edad }}</td>
+            <td>{{ perro.fechaPrimeraVacuna }}</td>
+            <td>{{ perro.lugarVacunacion }}</td>
+            <td>{{ perro.peso }}</td>
+            <td>{{ perro.origen }}</td>
+            <td>{{ perro.edificio }}</td>
+            <td>{{ perro.box }}</td>
+            <td>{{ perro.observacion }}</td>
+          </tr>
+          <tr *ngIf="!perrosDBService.loading() && filteredPerros.length === 0">
+            <td colspan="9">No hay datos.</td>
+          </tr>
         </tbody>
       </table>
+      </div>
     </div>
   </div>
 
-  <div class="pagination-controls">
-    <div class="page-size-options">
-      <label for="pageSize">Items por página:</label>
-      <select id="pageSize" [(ngModel)]="pageSize" (change)="changePageSize(pageSize)">
-        <option *ngFor="let size of pageSizeOptions" [value]="size">{{size}}</option>
-      </select>
-    </div>
-    <div class="pagination-buttons">
-      <button (click)="goToPage(0)" [disabled]="currentPage === 0">&laquo;</button>
-      <button (click)="previousPage()" [disabled]="currentPage === 0">&lt;</button>
-      <span>Pagina {{currentPage + 1}} of {{totalPages()}}</span>
-      <button (click)="nextPage()" [disabled]="currentPage >= totalPages() - 1"> &gt;</button>
-      <button (click)="goToPage(totalPages() - 1)" [disabled]="currentPage >= totalPages() - 1"> &raquo;</button>
-    </div>
-  </div>
-
+  <div class="row mt-3">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+            <label for="pageSize" class="mr-2">Items por página:</label>
+            <select id="pageSize" class="form-control w-auto" [(ngModel)]="pageSize" (change)="changePageSize(pageSize)">
+              <option *ngFor="let size of pageSizeOptions" [value]="size">{{size}}</option>
+            </select>
+          </div>
+          <div class="d-flex align-items-center">
+            <button class="btn btn-outline-primary mr-1" (click)="goToPage(0)" [disabled]="currentPage === 0">&laquo;</button>
+            <button class="btn btn-outline-primary mr-1" (click)="previousPage()" [disabled]="currentPage === 0">&lt;</button>
+            <span>{{currentPage + 1}} / {{totalPages()}}</span>
+            <button class="btn btn-outline-primary ml-1" (click)="nextPage()" [disabled]="currentPage >= totalPages() - 1">&gt;</button>
+            <button class="btn btn-outline-primary ml-1" (click)="goToPage(totalPages() - 1)" [disabled]="currentPage >= totalPages() - 1">&raquo;</button>
+          </div>
+        </div>
+      </div>
+</div>
 
 
