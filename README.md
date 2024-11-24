@@ -1,27 +1,72 @@
-# VeterinariaBackup
+# Aplicación de Gestión de Perros - Veterinaria
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.4.
+Esta aplicación web está diseñada para gestionar de manera eficiente la información de perros en una veterinaria. Ofrece funcionalidades avanzadas como el seguimiento del historial médico, comparación de peso, adopciones y más, todo presentado en una interfaz intuitiva y fácil de usar.
 
-## Development server
+## Características Principales
+- **Gestión de Perros**: Registro, edición y eliminación de datos de los perros.
+- **Historial Médico**: Seguimiento de vacunas y variaciones de peso a lo largo del tiempo.
+- **Sistema de Adopciones**: Administración de perros disponibles para adopción.
+- **Visualización Gráfica**: Gráficos interactivos para analizar datos médicos.
+- **Filtros Avanzados**: Filtrado de perros por criterios como estado (adoptado, fallecido).
+- **Interfaz Dinámica**: Ventanas modales para la edición y eliminación de perros.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Tecnologías Utilizadas
+- **Frontend:** Angular
+- **Backend:** Supabase
+- **Base de Datos:** Postgres (a través de Supabase)
+- **Styling:** Tailwind CSS y Material Design
 
-## Code scaffolding
+## Cómo Ejecutar el Proyecto
+Sigue estos pasos para clonar, instalar y ejecutar el proyecto en tu máquina local:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. **Clonar el repositorio**:
+   ```bash
+   git clone https://github.com/ialmanza/veterinaria_backup.git
+2. **Instalar las dependencias**:
+   cd veterinaria_backup
+   npm install
+3. **Iniciar la aplicación**:
+   ng serve
+4. Abre tu navegador y navega a http://localhost:4200.
+   
+## Estructura del proyecto
 
-## Build
+veterinaria_backup/
+├── src/
+│   ├── app/
+│   │   ├── components/
+│   │   │   ├── crear-perro/                  # Componente para crear un perro
+│   │   │   ├── editar/
+│   │   │   │   ├── dialog-content-edit-example-dialog/
+│   │   │   ├── comparar-peso/               # Comparación de pesos entre periodos de tiempo
+│   │   │   ├── filtrar-por/                 # Filtrar perros por estado 
+│   │   │   ├── grafico/                     # Gráficos interactivos
+│   │   │   ├── listar-perros/               # Listado de todos los perros
+│   │   │   ├── menu/                        # Menú principal
+│   │   │   ├── navigation/                  # Navegación de la aplicación
+│   │   │   ├── adoptado/                    # Gestión de perros adoptados 
+│   │   │   ├── perro-muerto/                # Gestión de perros fallecidos
+│   │   │   ├── ventana-modal-editar-perro/  # Modal para editar perro
+│   │   │   │   ├── dialog-content-edit-example-dialog/
+│   │   │   ├── ventana-modal-eliminar-perro/ # Modal para eliminar perro
+│   │   │   │   ├── dialog-animations-example-dialog/
+│   │   ├── services/                        # Servicios para manejar datos
+│   │   ├── models/                          # Modelos de datos
+│   ├── assets/                              # Archivos estáticos (imágenes, estilos)
+│   ├── environments/                        # Configuración de entornos
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Contribuciones
+¡Tu colaboración es bienvenida! Sigue estos pasos para contribuir:
+1. Hacer un fork del repositorio
+2. Crear una nueva rama
+   git checkout -b nombre-de-tu-rama
+3. Realizar los cambios necesarios
+4. Realizar un commit con un mensaje descriptivo:
+  git commit -m "Descripción de los cambios"
+5. Enviar un Pull Request.
 
-## Running unit tests
+## Licencia
+Este proyecto está licenciado bajo la MIT License.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Agradecimientos
+Un agradecimiento especial a todos los que apoyaron en el desarrollo de este proyecto, incluyendo recursos de la comunidad y documentación de Angular y Supabase.
