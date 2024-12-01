@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../Auth/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrl: './menu.component.css'
 })
 export class MenuComponent {
+  private _authService = inject(AuthService)
 
   constructor( private router: Router) { }
 
@@ -46,4 +48,8 @@ export class MenuComponent {
   drawerNavigation!.addEventListener('mouseleave', closeDrawer);
 }
 
+  async logout() {
+    await this._authService.signOut();
+    this.router.navigate(['/login']);
+  }
 }

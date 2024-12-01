@@ -56,6 +56,7 @@ export class PerrosdbService {
   //   return this.perrodbSubject.asObservable();
 
   //  }
+
   async getAllPerrosDB(): Promise<PerroDB[]> {
     try {
       this._state.update(state => ({ ...state, loading: true }));

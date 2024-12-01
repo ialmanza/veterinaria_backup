@@ -12,15 +12,15 @@
 
 
 .custom-button {
-  background-color: transparent; /* Quita el fondo */
-  color: #007bff; /* Color del texto */
-  border: none; /* Quita el borde */
-  outline: none; /* Quita el contorno */
+  background-color: transparent;
+  color: #007bff;
+  border: none;
+  outline: none;
   font-size: 18px;
 }
 
 .custom-button:hover {
-  color: black;
+  color: blue;
 }
 
 

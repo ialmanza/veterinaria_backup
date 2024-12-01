@@ -81,40 +81,5 @@ export class CrearPerroComponent {
     this.router.navigate(['/listar-perros']);
   }
 
-  insertarPerroDBNuevos() {
-    console.log('insertarPerroDBNuevos presionado');
-    const perros = [
-      { animalId: 'P001', edad: '2' , fechaPrimeraVacuna: '2023-05-15', lugarVacunacion: 'Clínica Canina Central', peso: '20', origen: 'Refugio Los Pinos', edificio: 'A', box: '1', observacion: 'Energético y sociable' },
-      { animalId: 'P002', edad: '6' , fechaPrimeraVacuna: '2023-06-10', lugarVacunacion: 'Veterinaria Amigos', peso: '8', origen: 'Callejón Libertad', edificio: 'B', box: '2', observacion: 'Tímido al principio' },
-      { animalId: 'P003', edad: '4' , fechaPrimeraVacuna: '2022-04-25', lugarVacunacion: 'VetCare', peso: '25 ', origen: 'Adopción previa', edificio: 'A', box: '3', observacion: 'Muy obediente' },
-      { animalId: 'P004', edad: '3' , fechaPrimeraVacuna: '2023-01-15', lugarVacunacion: 'Clínica Canina Sur', peso: '18', origen: 'Rescate urbano', edificio: 'C', box: '4', observacion: 'Le encanta jugar' },
-      { animalId: 'P005', edad: '1' , fechaPrimeraVacuna: '2023-07-20', lugarVacunacion: 'Veterinaria Amigos', peso: '12', origen: 'Refugio Santa María', edificio: 'B', box: '5', observacion: 'Tiene miedo a los ruidos fuertes' },
-      { animalId: 'P006', edad: '5' , fechaPrimeraVacuna: '2022-08-30', lugarVacunacion: 'Clínica Canina Central', peso: '30', origen: 'Adopción fallida', edificio: 'D', box: '6', observacion: 'Excelente compañero' },
-      { animalId: 'P007', edad: '9' , fechaPrimeraVacuna: '2023-09-15', lugarVacunacion: 'VetCare', peso: '10 ', origen: 'Refugio de animales', edificio: 'A', box: '7', observacion: 'Juguetón y curioso' },
-      { animalId: 'P008', edad: '7' , fechaPrimeraVacuna: '2021-12-10', lugarVacunacion: 'Clínica Animalia', peso: '22 ', origen: 'Rescate de granja', edificio: 'E', box: '8', observacion: 'Calmado y tranquilo' },
-      { animalId: 'P009', edad: '3' , fechaPrimeraVacuna: '2023-10-05', lugarVacunacion: 'Veterinaria Amigos', peso: '6', origen: 'Abandono en parque', edificio: 'B', box: '9', observacion: 'Aún aprendiendo hábitos' },
-      { animalId: 'P010', edad: '2' , fechaPrimeraVacuna: '2023-03-17', lugarVacunacion: 'VetCare', peso: '18 ', origen: 'Adopción previa', edificio: 'A', box: '10', observacion: 'Sociable con otros perros' },
-      { animalId: 'P011', edad: '3' , fechaPrimeraVacuna: '2022-11-25', lugarVacunacion: 'Clínica Canina Sur', peso: '24 ', origen: 'Rescate de carretera', edificio: 'C', box: '11', observacion: 'Le encanta correr' },
-      { animalId: 'P012', edad: '4' , fechaPrimeraVacuna: '2023-10-12', lugarVacunacion: 'Clínica Animalia', peso: '5', origen: 'Callejón Libertad', edificio: 'D', box: '12', observacion: 'Muy juguetón' },
-      { animalId: 'P013', edad: '2' , fechaPrimeraVacuna: '2023-06-18', lugarVacunacion: 'Clínica Canina Central', peso: '14 ', origen: 'Refugio Los Pinos', edificio: 'A', box: '13', observacion: 'Aprendiendo comandos básicos' },
-      { animalId: 'P014', edad: '1' , fechaPrimeraVacuna: '2023-05-25', lugarVacunacion: 'VetCare', peso: '11 ', origen: 'Rescate de incendio', edificio: 'B', box: '14', observacion: 'Hiperactivo' },
-      { animalId: 'P015', edad: '6' , fechaPrimeraVacuna: '2022-09-30', lugarVacunacion: 'Clínica Canina Sur', peso: '28', origen: 'Abandono en zona rural', edificio: 'E', box: '15', observacion: 'Dócil y cariñoso' },
-      { animalId: 'P016', edad: '8' , fechaPrimeraVacuna: '2023-08-10', lugarVacunacion: 'Veterinaria Amigos', peso: '9', origen: 'Refugio Santa María', edificio: 'D', box: '16', observacion: 'Necesita entrenamiento' },
-      { animalId: 'P017', edad: '4' , fechaPrimeraVacuna: '2022-07-20', lugarVacunacion: 'VetCare', peso: '21 ', origen: 'Adopción previa', edificio: 'A', box: '17', observacion: 'Le encanta nadar' },
-      { animalId: 'P018', edad: '3' , fechaPrimeraVacuna: '2023-10-01', lugarVacunacion: 'Clínica Animalia', peso: '4', origen: 'Callejón Libertad', edificio: 'B', box: '18', observacion: 'Juguetón y curioso' },
-      { animalId: 'P019', edad: '1' , fechaPrimeraVacuna: '2023-04-15', lugarVacunacion: 'Clínica Canina Sur', peso: '13', origen: 'Rescate urbano', edificio: 'C', box: '19', observacion: 'Cariñoso y amigable' },
-      { animalId: 'P020', edad: '7' , fechaPrimeraVacuna: '2021-11-10', lugarVacunacion: 'Clínica Animalia', peso: '23', origen: 'Refugio Los Pinos', edificio: 'D', box: '20', observacion: 'Excelente compañero' },
-      { animalId: 'P021', edad: '5' , fechaPrimeraVacuna: '2022-03-25', lugarVacunacion: 'VetCare', peso: '26', origen: 'Adopción fallida', edificio: 'E', box: '21', observacion: 'Calmado y confiado' },
-      { animalId: 'P022', edad: '9' , fechaPrimeraVacuna: '2023-09-12', lugarVacunacion: 'Clínica Canina Central', peso: '12', origen: 'Rescate de carretera', edificio: 'A', box: '22', observacion: 'Sociable con niños' },
-      { animalId: 'P023', edad: '2' , fechaPrimeraVacuna: '2023-05-20', lugarVacunacion: 'Clínica Animalia', peso: '17', origen: 'Refugio Santa María', edificio: 'B', box: '23', observacion: 'Adora los paseos' },
-      { animalId: 'P024', edad: '3' , fechaPrimeraVacuna: '2022-08-10', lugarVacunacion: 'VetCare', peso: '19', origen: 'Abandono en parque', edificio: 'C', box: '24', observacion: 'Activo y saludable' },
-      { animalId: 'P025', edad: '6' , fechaPrimeraVacuna: '2023-07-15', lugarVacunacion: 'Clínica Canina Sur', peso: '7', origen: 'Refugio Los Pinos', edificio: 'D', box: '25', observacion: 'Aprendiendo a socializar' },
-    ];
-
-    for (let i = 0; i < perros.length; i++) {
-      this.perrosdbService.insertarPerroDB(perros[i]);
-    }
-    console.log('Perros insertados en la base de datos.');
-  }
 
 }
