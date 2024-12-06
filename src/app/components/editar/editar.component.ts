@@ -176,14 +176,14 @@ class DialogContentEditExampleDialog implements OnInit {
 
   toggleEdit() {
     this.editing = !this.editing;
-    console.log(`Editing: ${this.editing}`); // Agregado para debug
+    console.log(`Editing: ${this.editing}`);
   }
 
   saveChanges() {
     if (this.perros) {
       this.perrosService.editarPerroDB(this.perros, this.perros.id);
-      console.log('Perro actualizado:', this.perros); // Agregado para debug
+      console.log('Perro actualizado:', this.perros);
     }
-    this.toggleEdit(); // Desactiva la edición después de guardar
+    this.toggleEdit();
   }
 }

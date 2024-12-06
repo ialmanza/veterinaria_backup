@@ -52,11 +52,6 @@ export class PerrosdbService {
     this.getAllPerrosDB();
   }
 
-  // getPerros():Observable<PerroDB[]> {
-  //   return this.perrodbSubject.asObservable();
-
-  //  }
-
   async getAllPerrosDB(): Promise<PerroDB[]> {
     try {
       this._state.update(state => ({ ...state, loading: true }));
@@ -67,13 +62,13 @@ export class PerrosdbService {
 
       if (data && data.length > 0) {
         this._state.update(state => ({ ...state, perros: data }));
-        return data; // Retorna los datos obtenidos
+        return data;
       }
 
-      return []; // Retorna un array vacío si no hay datos
+      return [];
     } catch (error) {
       this._state.update(state => ({ ...state, error: true }));
-      return []; // Retorna un array vacío en caso de error
+      return [];
     } finally {
       this._state.update(state => ({ ...state, loading: false }));
     }
@@ -133,7 +128,7 @@ export class PerrosdbService {
     const { data, error } = await this._supabaseClient
       .from('perros')
       .select('*')
-      .eq(colunma, value); // Ajusta el filtro según tus necesidades
+      .eq(colunma, value);
 
     if (error) {
       return [];
@@ -187,27 +182,27 @@ export class PerrosdbService {
   async addPesoYFechaAlPerro(id: string, peso: string, fecha: string) {
     try {
 
-      // Verificar si el perro existe y obtener los arreglos pesosGrafico y fechasDePesos
+
       const { data, error } = await this._supabaseClient
         .from('perros')
         .select('pesosGrafico, fechasDePesos')
         .eq('id', id)
-        .single(); // Asegura que solo un resultado sea devuelto
+        .single();
 
       if (error) {
         throw error;
       }
 
       if (data) {
-        // El perro existe, obtener los arreglos de pesosGrafico y fechasDePesos
+
         const pesosGrafico = data.pesosGrafico || [];
         const fechasDePesos = data.fechasDePesos || [];
 
-        // Agregar el nuevo peso y la nueva fecha a los arreglos
+
         pesosGrafico.push(peso);
         fechasDePesos.push(fecha);
 
-        // Actualizar el registro en la base de datos con los nuevos arreglos
+
         const { error: updateError } = await this._supabaseClient
           .from('perros')
           .update({ pesosGrafico, fechasDePesos })

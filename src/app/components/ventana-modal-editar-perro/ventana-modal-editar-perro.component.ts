@@ -52,14 +52,12 @@ export class VentanaModalEditarPerroComponent {
 
     toggleEdit() {
       this.editing = !this.editing;
-      console.log(`Editing: ${this.editing}`); // Agregado para debug
     }
 
     saveChanges() {
       if (this.perros) {
 
-        console.log('Perro actualizado:', this.perros); // Agregado para debug
       }
-      this.toggleEdit(); // Desactiva la edición después de guardar
+      this.toggleEdit();
     }
   }

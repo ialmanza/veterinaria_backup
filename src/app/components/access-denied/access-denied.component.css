@@ -1,0 +1,16 @@
+
+.acceso-denegado {
+  padding: 2rem;
+  text-align: center;
+}
+
+.acceso-denegado h1 {
+  font-size: 5.25rem;
+  font-weight: 600;
+  color: #f43f5e;
+}
+
+.acceso-denegado p {
+  color: #717171;
+  margin-top: 1rem;
+}

@@ -41,7 +41,7 @@
   padding: 0;
   margin: 0;
   display: flex;
-  gap: 10px; /* Espacio entre los íconos */
+  gap: 10px;
 }
 
 .icon-container {

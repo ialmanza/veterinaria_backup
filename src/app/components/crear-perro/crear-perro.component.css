@@ -3,7 +3,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 20px;
   background-color: #fff;
-  transition: 0.3s; /* Transición suave para las animaciones */
+  transition: 0.3s;
   overflow: hidden;
 }
 
@@ -11,12 +11,12 @@
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
  }
 
- /* Estilos para el formulario dentro de la tarjeta */
+
 .form-group {
   margin-bottom: 15px;
  }
 
- /* Estilos para los campos de entrada del formulario */
+
  .form-control {
   border-radius: 5px;
   border: 1px solid #ced4da;
@@ -24,8 +24,8 @@
  }
 
 .form-card {
-  position: sticky; /* Permite que la tarjeta se "pegue" al hacer scroll */
-  top: 20px; /* Ajusta la distancia desde la parte superior */
+  position: sticky;
+  top: 20px;
 }
 
 .list-card {
@@ -46,59 +46,59 @@
 
  }
 
- /* Estilos específicos para el mat-tab-group */
+
  mat-tab-group {
   margin-top: 20px;
  }
 
- /* Estilos para los títulos de las pestañas */
+
  mat-tab-label {
-  font-weight: bold; /* Hace que los títulos de las pestañas sean en negrita */
+  font-weight: bold;
  }
 
- /* Estilos para el contenido de las pestañas */
+
  mat-tab-body {
   padding: 10px;
  }
 
- /* Estilo para el elemento select */
+
 select.form-control {
   border-radius: 5px;
   border: 1px solid #ced4da;
   padding: 10px;
   background-color: #fff;
-  transition: border-color 0.3s, box-shadow 0.3s; /* Transiciones suaves para el borde y la sombra */
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-/* Estilo para el select al hacer focus */
+
 select.form-control:focus {
   border-color: #80bdff;
   box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
-  outline: none; /* Quita el borde predeterminado del navegador */
+  outline: none;
 }
 
-/* Estilo para las opciones dentro del select */
+
 select.form-control option {
   padding: 10px;
   background-color: #fff;
 }
 
-/* Cambia el color de fondo y el color del texto al pasar el ratón sobre las opciones */
+
 select.form-control option:hover {
   background-color: #f1f1f1;
 }
 
-/* Asegura que el select tenga un margen inferior consistente con otros elementos del formulario */
+
 .form-group select.form-control {
   margin-bottom: 15px;
 }
 
-/* Añade un margen inferior al select */
+
 select {
   margin-bottom: 15px;
 }
 
-/* Ajusta el ancho del select para que sea igual al de otros campos de formulario */
+
 select.form-control {
   width: 100%;
 }

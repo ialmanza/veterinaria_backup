@@ -52,7 +52,7 @@ export class FiltrarPorComponent {
     }
     this.filteredPerros = filtered;
     this.totalItems = filtered.length;
-    this.currentPage = 0;  // Reset to first page
+    this.currentPage = 0;
     this.updateDisplayedPerros();
   }
 
@@ -73,7 +73,7 @@ export class FiltrarPorComponent {
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(filteredData);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Perros');
-    XLSX.writeFile(wb, 'Perros.xlsx');
+    XLSX.writeFile(wb, `Perros_${this.selectedEdificio}_${this.selectedBox}.xlsx`);
   }
 
   updateDisplayedPerros() {

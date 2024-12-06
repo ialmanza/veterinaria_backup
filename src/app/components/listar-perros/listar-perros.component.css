@@ -66,7 +66,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  padding: 2px; /* primero estaba en 20 */
+  padding: 2px;
 }
 .row {
   display: flex;
