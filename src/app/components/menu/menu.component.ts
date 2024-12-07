@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../Auth/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -9,8 +10,9 @@ import { AuthService } from '../Auth/auth.service';
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit, OnDestroy {
   private _authService = inject(AuthService)
+  private authSubscription: Subscription | undefined;
 
   constructor( private router: Router) { }
 
@@ -48,6 +50,9 @@ export class MenuComponent {
   drawerNavigation!.addEventListener('mouseleave', closeDrawer);
 }
 
+ngOnDestroy() {
+  this.authSubscription?.unsubscribe();
+}
   async logout() {
     await this._authService.signOut();
     this.router.navigate(['/login']);
