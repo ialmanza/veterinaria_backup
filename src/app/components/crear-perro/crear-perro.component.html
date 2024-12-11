@@ -1,4 +1,5 @@
-<div class="container p-4">
+
+ <div class="container p-4">
   <div class="row">
     <div class="col-md-9 mx-auto">
       <div class="card">
@@ -6,45 +7,105 @@
           <form [formGroup]="form">
             <div class="form-group p-2">
               <div class="mb-3">
-
-                <input type="text" class="form-control" formControlName="animalId" id="animalId" placeholder="Ingrese el animal ID">
+                <input
+                  type="text"
+                  class="form-control"
+                  [ngClass]="{'is-invalid': shouldShowError('animalId')}"
+                  formControlName="animalId"
+                  id="animalId"
+                  placeholder="Ingrese el animal ID">
+                <div *ngIf="shouldShowError('animalId')" class="invalid-feedback">
+                  Este campo es requerido
+                </div>
               </div>
 
               <div class="mb-3">
-
-                <input type="number" class="form-control" formControlName="edad" id="edad" placeholder="Ingrese la edad en meses">
+                <input
+                  type="number"
+                  class="form-control"
+                  [ngClass]="{'is-invalid': shouldShowError('edad')}"
+                  formControlName="edad"
+                  id="edad"
+                  placeholder="Ingrese la edad en meses">
+                <div *ngIf="shouldShowError('edad')" class="invalid-feedback">
+                  Este campo es requerido
+                </div>
               </div>
 
               <div class="mb-3">
-
-                <input type="date" class="form-control" formControlName="fechaPrimeraVacuna" id="fechaPrimeraVacuna">
+                <input
+                  type="date"
+                  class="form-control"
+                  [ngClass]="{'is-invalid': shouldShowError('fechaPrimeraVacuna')}"
+                  formControlName="fechaPrimeraVacuna"
+                  id="fechaPrimeraVacuna">
+                <div *ngIf="shouldShowError('fechaPrimeraVacuna')" class="invalid-feedback">
+                  Este campo es requerido
+                </div>
               </div>
 
               <div class="mb-3">
-
-                <textarea name="lugarDeVacunacion" class="form-control" formControlName="lugarVacunacion" id="lugarVacunacion" placeholder="Lugar de vacunación" rows="3"></textarea>
+                <textarea
+                  class="form-control"
+                  [ngClass]="{'is-invalid': shouldShowError('lugarVacunacion')}"
+                  formControlName="lugarVacunacion"
+                  id="lugarVacunacion"
+                  placeholder="Lugar de vacunación"
+                  rows="3"></textarea>
+                <div *ngIf="shouldShowError('lugarVacunacion')" class="invalid-feedback">
+                  Este campo es requerido
+                </div>
               </div>
 
               <div class="mb-3">
-
-                <input type="text" class="form-control" formControlName="peso" id="peso" placeholder="Ingrese el peso">
+                <input
+                  type="text"
+                  class="form-control"
+                  [ngClass]="{'is-invalid': shouldShowError('peso')}"
+                  formControlName="peso"
+                  id="peso"
+                  placeholder="Ingrese el peso">
+                <div *ngIf="shouldShowError('peso')" class="invalid-feedback">
+                  Este campo es requerido
+                </div>
               </div>
 
               <div class="mb-3">
-
-                <input type="text" class="form-control" formControlName="origen" id="origen" placeholder="Ingrese el origen">
+                <input
+                  type="text"
+                  class="form-control"
+                  [ngClass]="{'is-invalid': shouldShowError('origen')}"
+                  formControlName="origen"
+                  id="origen"
+                  placeholder="Ingrese el origen">
+                <div *ngIf="shouldShowError('origen')" class="invalid-feedback">
+                  Este campo es requerido
+                </div>
               </div>
 
               <div class="mb-3">
-                <select class="form-control" id="edificio" formControlName="edificio" [(ngModel)]="selectedEdificio">
+                <select
+                  class="form-control"
+                  [ngClass]="{'is-invalid': shouldShowError('edificio')}"
+                  id="edificio"
+                  formControlName="edificio"
+                  [(ngModel)]="selectedEdificio">
                   <option value="" disabled selected>Seleccione el edificio</option>
                   <option value="107">107</option>
                   <option value="108">108</option>
                 </select>
+                <div *ngIf="shouldShowError('edificio')" class="invalid-feedback">
+                  Debe seleccionar un edificio
+                </div>
               </div>
 
               <div class="mb-3">
-                <select class="form-control" id="box" formControlName="box" [(ngModel)]="selectedBox">
+                <select
+                  class="form-control"
+                  [ngClass]="{'is-invalid': shouldShowError('box')}"
+                  id="box"
+                  formControlName="box"
+                  [(ngModel)]="selectedBox">
                   <option value="" disabled selected>Seleccione el box</option>
                   <ng-container *ngIf="selectedEdificio === '107'">
                     <option *ngFor="let box of boxes107" [value]="box">{{ box }}</option>
@@ -53,18 +114,35 @@
                     <option *ngFor="let box of boxes108" [value]="box">{{ box }}</option>
                   </ng-container>
                 </select>
+                <div *ngIf="shouldShowError('box')" class="invalid-feedback">
+                  Debe seleccionar un box
+                </div>
               </div>
 
               <div class="mb-3">
-
-                <textarea name="observaciones" class="form-control" formControlName="observacion" id="observacion" placeholder="Observaciones" rows="3"></textarea>
+                <textarea
+                  class="form-control"
+                  formControlName="observacion"
+                  id="observacion"
+                  placeholder="Observaciones"
+                  rows="3"></textarea>
               </div>
 
               <div class="d-flex flex-column">
-                <button type="submit" class="btn btn-primary btn-block mb-2" [disabled]="!form.valid" (click)="insertarPerroDB()">Agregar</button>
-              <button type="button" class="btn btn-danger btn-block mt-2" (click)="onClick()">Cancelar</button>
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-block mb-2"
+                  [disabled]="!form.valid"
+                  (click)="insertarPerroDB()">
+                  Agregar
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-block mt-2"
+                  (click)="onClick()">
+                  Cancelar
+                </button>
               </div>
-
             </div>
           </form>
         </div>
@@ -72,5 +150,3 @@
     </div>
   </div>
 </div>
-
-

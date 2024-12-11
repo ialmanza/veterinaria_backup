@@ -81,5 +81,9 @@ export class CrearPerroComponent {
     this.router.navigate(['/listar-perros']);
   }
 
+  shouldShowError(fieldName: string): boolean {
+    const field = this.form.get(fieldName);
+    return field ? (field.invalid && (field.dirty || field.touched)) : false;
+  }
 
 }
